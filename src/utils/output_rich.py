@@ -11,6 +11,7 @@ class RichLog:
     def __init__(self):
         pass
 
+
     def error_log(self, message: str) -> None:
         """
         Лог об ошибке (используется при сообщении об ошибке выполнении
@@ -23,6 +24,7 @@ class RichLog:
         """
 
         console.log(f"[red][ERROR] {message}[/red]", _stack_offset=2)
+
 
     def success_log(self, message: str) -> None:
         """
@@ -37,6 +39,7 @@ class RichLog:
 
         console.log(f"[green][SUCCESS] {message}[/green]",  _stack_offset=2)
 
+
     def simple_log(self, message: str) -> None:
         """
         Обычный лог (информационный) - вывод в терминал (с использованием библиотеки Rich)
@@ -49,6 +52,7 @@ class RichLog:
 
         console.log(f"[cyan][INFO] {message}[/cyan]",  _stack_offset=2)
 
+
     def debug_log(self, message: str) -> None:
         """
         Лог для дебаггинга - вывод в терминал (с использованием библиотеки Rich)
@@ -59,6 +63,7 @@ class RichLog:
         """
 
         console.log(f"[grey46][Debug] {message}[/grey46]",  _stack_offset=2)
+
 
     def warning_log(self, message: str) -> None:
         """
@@ -72,6 +77,7 @@ class RichLog:
 
         console.log(f"[bold yellow][WARN] ВНИМАНИЕ: {message}[/bold yellow]",  _stack_offset=2)
 
+
     def print_spacer(self) -> None:
         """
         Разделитель для более наглядного показа лога процессов в консоли
@@ -80,6 +86,7 @@ class RichLog:
         """
 
         console.log(f"[grey46][Debug] {"-" * 151}[/grey46]", _stack_offset=2)
+
 
     def print_spacer_points(self) -> None:
         """
@@ -90,5 +97,20 @@ class RichLog:
         """
 
         console.log(f"[grey46][Debug] {"." * 151}[/grey46]", _stack_offset=2)
+
+
+    def input_data(self, input_label: str):
+        """
+        Функция для красивого оформления ввода данных через терминал с использованием
+         библиотеки Rich
+        :param input_label: Str - Принимает строку с заголовком ввода (пример: 'Автор',
+         чтобы в логе ввода было 'Автор: ')
+        :return: Optional
+        """
+
+        value = console.input(f"[bold orange1][INPUT] {input_label}:[/bold orange1]")
+
+        return value
+
 
 Rich = RichLog()
