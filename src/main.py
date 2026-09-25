@@ -11,4 +11,4 @@ if __name__ == "__main__":
 
     EntryReportData.entry_report_data()
     EntryReportData.save_data_to_csv()
-    EntryReportData.get_csv_data()
+    EntryReportData.read_csv_data()
