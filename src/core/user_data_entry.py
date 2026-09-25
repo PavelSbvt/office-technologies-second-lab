@@ -202,12 +202,17 @@ class UserEntryReportData:
                     self.annotations, self.IBM_type, self.program_language,
                     self.operation_system, self.scope_program]
 
-        with open('resources/csv/report-data.csv', mode='w', newline='') as csv_file:
+        with open('resources/csv/report-data.csv',
+                  mode='w',
+                  newline='',
+                  encoding='utf-8'
+                  ) as csv_file:
+
             writer = csv.writer(csv_file)
 
-            writer.writerows(csv_data)
+            writer.writerow(csv_data)
 
-            Rich.success_log("Данные, введённые пользователем сохранены в csv файл")
+            Rich.success_log("Данные, введённые пользователем, сохранены в csv файл")
 
     def get_csv_data(self) -> None:
         """
@@ -217,11 +222,22 @@ class UserEntryReportData:
          для заполнения шаблона реферата)
         """
 
-        with open('resources/csv/report-data.csv', mode='r', newline='') as csv_file:
+        with (open('resources/csv/report-data.csv',
+                  mode='r',
+                  newline='',
+                  encoding='utf-8')
+              as csv_file):
             csv_reader = csv.reader(csv_file)
 
             Rich.debug_log("Данные из csv:")
             Rich.print_spacer_points()
             for row in csv_reader:
-                Rich.debug_log(row)
-
+                Rich.debug_log(f"Авторы: {row[0]}")
+                Rich.debug_log(f"Правообладатель: {row[1]}")
+                Rich.debug_log(f"Название программы: {row[2]}")
+                Rich.debug_log(f"Аннотация: {row[3]}")
+                Rich.debug_log(f"Тип ЭВМ: {row[4]}")
+                Rich.debug_log(f"Язык программирования: {row[5]}")
+                Rich.debug_log(f"Поддерживаемые операционные системы: {row[6]}")
+                Rich.debug_log(f"Объём программы: {row[7]}")
+                Rich.print_spacer_points()
