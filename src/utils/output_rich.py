@@ -108,7 +108,7 @@ class RichLog:
         :return: Optional
         """
 
-        value = console.input(f"[bold orange1][INPUT] {input_label}:[/bold orange1]")
+        value = console.input(f"[bold orange1][INPUT] {input_label}: [/bold orange1]")
 
         return value
 
