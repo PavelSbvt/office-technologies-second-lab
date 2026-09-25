@@ -95,7 +95,7 @@ class UserEntryReportData:
             Rich.warning_log("Не введена аннотация.")
 
 
-    def get_IBM_type(self) -> None:
+    def get_ibm_type(self) -> None:
         """
         Функция для получения типа ЭВМ для реферата.
         Получение данных из ввода консоли и присвоение полученного значения
@@ -182,7 +182,7 @@ class UserEntryReportData:
 
         self.get_annotation()
 
-        self.get_IBM_type()
+        self.get_ibm_type()
 
         self.get_program_language()
 
@@ -214,7 +214,8 @@ class UserEntryReportData:
 
             Rich.success_log("Данные, введённые пользователем, сохранены в csv файл")
 
-    def get_csv_data(self) -> None:
+    @staticmethod
+    def read_csv_data() -> None:
         """
         Функция для получения данных из csv
 
@@ -229,15 +230,19 @@ class UserEntryReportData:
               as csv_file):
             csv_reader = csv.reader(csv_file)
 
-            Rich.debug_log("Данные из csv:")
-            Rich.print_spacer_points()
             for row in csv_reader:
-                Rich.debug_log(f"Авторы: {row[0]}")
-                Rich.debug_log(f"Правообладатель: {row[1]}")
-                Rich.debug_log(f"Название программы: {row[2]}")
-                Rich.debug_log(f"Аннотация: {row[3]}")
-                Rich.debug_log(f"Тип ЭВМ: {row[4]}")
-                Rich.debug_log(f"Язык программирования: {row[5]}")
-                Rich.debug_log(f"Поддерживаемые операционные системы: {row[6]}")
-                Rich.debug_log(f"Объём программы: {row[7]}")
-                Rich.print_spacer_points()
+                Rich.print_tabel(
+                                "Данные из csv (реферат)",
+                                ["Параметр", "Значение"],
+                                [
+                                    ["Авторы", row[0]],
+                                    ["Правообладатель", row[1]],
+                                    ["Название программы", row[2]],
+                                    ["Аннотация", row[3]],
+                                    ["Тип ЭВМ", row[4]],
+                                    ["Язык программирования", row[5]],
+                                    ["Поддерживаемые операционные системы", row[6]],
+                                    ["Объём программы", row[7]],
+                                ]
+                                )
+
