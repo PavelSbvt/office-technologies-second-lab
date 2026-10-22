@@ -157,7 +157,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="inputCopyratingHolders"/>
+        <widget class="QLineEdit" name="inputCopyrightHolders"/>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
@@ -353,7 +353,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="buttonBuildDocument">
+        <widget class="QPushButton" name="buttonBuildReport">
          <property name="styleSheet">
           <string notr="true">QPushButton{
 	background-color: rgb(111, 200, 97);
