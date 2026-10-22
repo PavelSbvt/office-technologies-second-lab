@@ -40,6 +40,9 @@ class MainWindow(QMainWindow):
 
         self.get_input_data_for_consent_info_about_author()
 
+        self.fill_consent_info_about_author(
+            self.consent_info_about_author[0])
+
 
     def build_connect(self) -> None:
         """
@@ -53,6 +56,9 @@ class MainWindow(QMainWindow):
 
         self.get_input_data_for_consent_processing_personal_data()
 
+        self.fill_consent_to_processing_personal_data(
+            self.consent_processing_personal_data[0])
+
 
     def build_report(self) -> None:
         """
@@ -65,9 +71,9 @@ class MainWindow(QMainWindow):
 
         self.get_input_data_for_report()
 
-        # self.fill_report_data(authors, copyright_holders, app_name,
-        #                       annotation, IBM_type, program_language,
-        #                       operation_system, scope_program)
+        report_data = self.report_data[0]
+
+        self.fill_report_data(report_data)
 
 
     def get_input_data_for_consent_info_about_author(self) -> None:
@@ -89,7 +95,7 @@ class MainWindow(QMainWindow):
         copyright_holder_name = self.inputCopyrightHolderName.text().strip()
         role = self.inputRole.text().strip()
 
-        if (not IBM_name or not physical_person_data or not juridical_person_data
+        if (not IBM_name or (not physical_person_data and not juridical_person_data)
                 or not authors_name or not born_data or not citizenship
                 or not place_of_life or not src_percent
                 or not copyright_holder_name or not role):
@@ -280,19 +286,27 @@ class MainWindow(QMainWindow):
         Rich.print_spacer_points()
         event.accept()
 
-
     @staticmethod
-    def fill_report_data(authors, copyright_holders, app_name,
-                         annotation, IBM_type, program_language,
-                         operation_system, scope_program):
+    def fill_report_data(report_data: list):
         """
         Функция для заполнения документа Реферат.docx данными, которые ввёл пользователь
+
+        :param report_data: массив со всеми введёнными пользователем данными
 
         :return: None
         """
 
         path_template_report = Path("resources/documents/report.docx").as_posix()
         doc = DocxTemplate(path_template_report)
+
+        authors = report_data[0]
+        copyright_holders = report_data[1]
+        app_name = report_data[2]
+        annotation = report_data[3]
+        IBM_type = report_data[4]
+        program_language = report_data[5]
+        operation_system = report_data[6]
+        scope_program = report_data[7]
 
         context = {
             'authors': authors,
@@ -307,6 +321,98 @@ class MainWindow(QMainWindow):
 
         doc.render(context)
         path_save_doc = Path("output/output-report.docx").as_posix()
+        doc.save(path_save_doc)
+
+        Rich.success_log("Документ успешно создан!")
+
+
+    @staticmethod
+    def fill_consent_to_processing_personal_data(data_mas: list):
+        """
+        Функция для заполнения документа согласия на обработку персональных данных
+        данными, которые ввёл пользователь на второй вкладке.
+
+        :param data_mas: список значений из csv (7 элементов)
+
+        :return: None
+        """
+
+        path_template_consent = Path(
+            "resources/documents/consent-to-the-processing-of-personal-data.docx"
+        ).as_posix()
+        doc = DocxTemplate(path_template_consent)
+
+        IBM_name = data_mas[0]
+        full_name = data_mas[1]
+        address = data_mas[2]
+        serial_and_number_passport = data_mas[3]
+        data_issue = data_mas[4]
+        issue_by = data_mas[5]
+        surname_and_initials = data_mas[6]
+
+        context = {
+            'ibm_name': IBM_name,
+            'full_name': full_name,
+            'address': address,
+            'passport': serial_and_number_passport,
+            'data_issue': data_issue,
+            'issue_by': issue_by,
+            'initials': surname_and_initials,
+        }
+
+        doc.render(context)
+        path_save_doc = Path(
+            "output/output-consent-to-processing-personal-data.docx"
+        ).as_posix()
+        doc.save(path_save_doc)
+
+        Rich.success_log("Документ успешно создан!")
+
+
+    @staticmethod
+    def fill_consent_info_about_author(data_mas: list):
+        """
+        Функция для заполнения документа согласия на указание сведений об авторе
+        данными, которые ввёл пользователь на третьей вкладке.
+
+        :param data_mas: список значений из csv (10 элементов)
+
+        :return: None
+        """
+
+        path_template_consent = Path(
+            "resources/documents/consent-to-provide-information-about-the-author.docx"
+        ).as_posix()
+        doc = DocxTemplate(path_template_consent)
+
+        IBM_name = data_mas[0]
+        physical_person_data = data_mas[1]
+        juridical_person_data = data_mas[2]
+        authors_name = data_mas[3]
+        born_data = data_mas[4]
+        citizenship = data_mas[5]
+        place_of_life = data_mas[6]
+        src_percent = data_mas[7]
+        copyright_holder_name = data_mas[8]
+        role = data_mas[9]
+
+        context = {
+            'ibm_name': IBM_name,
+            'physical_person_data': physical_person_data,
+            'juridical_person_data': juridical_person_data,
+            'authors_name': authors_name,
+            'born_data': born_data,
+            'citizenship': citizenship,
+            'place_of_life': place_of_life,
+            'src_percent': src_percent,
+            'copyright_holder_name': copyright_holder_name,
+            'role': role,
+        }
+
+        doc.render(context)
+        path_save_doc = Path(
+            "output/output-consent-info-about-author.docx"
+        ).as_posix()
         doc.save(path_save_doc)
 
         Rich.success_log("Документ успешно создан!")
