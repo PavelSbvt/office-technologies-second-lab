@@ -20,6 +20,8 @@ if __name__ == "__main__":
     App = QApplication(sys.argv)
 
     MyMainWindow = MainWindow()
+    Rich.enter_log("Показ главного окна")
+    Rich.print_spacer()
     MyMainWindow.show()
 
     sys.exit(App.exec())
