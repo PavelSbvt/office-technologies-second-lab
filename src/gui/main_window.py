@@ -15,10 +15,27 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.report_data = []
+        self.consent_processing_personal_data = []
+
         ui_path = Path('src/gui/ui/main_window.ui').as_posix()
         loadUi(ui_path, self)
 
         self.buttonBuildReport.clicked.connect(self.build_report)
+        self.buttonBuildConsent.clicked.connect(self.build_connect)
+
+
+    def build_connect(self) -> None:
+        """
+        Функция для заполнения шаблона согласия данными, которые ввёл пользователь.
+
+        :return: None
+        """
+
+        Rich.debug_log("Пользователь нажал кнопку сборки согласия на обработку "
+                       "персональных данных")
+
+        self.get_input_data_for_consent_processing_personal_data()
 
 
     def build_report(self) -> None:
@@ -32,10 +49,62 @@ class MainWindow(QMainWindow):
 
         self.get_input_data_for_report()
 
+        # self.fill_report_data(authors, copyright_holders, app_name,
+        #                       annotation, IBM_type, program_language,
+        #                       operation_system, scope_program)
+
+
+    def get_input_data_for_consent_processing_personal_data(self) -> None:
+        """
+        Функция для получения данных, введённых пользователем в соответствующие поля
+        вкладки заполнения шаблона соглашения на обработку персональных данных
+
+        :return: None.
+        """
+
+        IBM_name = self.inputNameIBM.text().strip()
+        full_name = self.inputFullName.text().strip()
+        address = self.inputAddress.text().strip()
+        serial_and_number_passport = self.inputPasportInfo.text().strip()
+        issue_by = self.inputIssuedByWhom.text().strip()
+        surname_and_initials = self.inputSurnameInitials.text().strip()
+
+        if (not IBM_name or not full_name or not address or
+                not serial_and_number_passport or not issue_by or
+                not surname_and_initials):
+            Rich.warning_log("Проверьте поля - есть незаполненные поля")
+            return
+
+        Rich.print_spacer()
+
+        Rich.debug_log(f"Текст поля 'название программы ЭВМ': {IBM_name}")
+        Rich.debug_log(f"Текст поля 'Фамилия Имя Отчество': {full_name}")
+        Rich.debug_log(f"Текст поля 'Адрес прописки': {address}")
+        Rich.debug_log(f"Текст поля 'Серия номер паспорта': {serial_and_number_passport}")
+        Rich.debug_log(f"Текст поля 'Кем выдан': {issue_by}")
+        Rich.debug_log(f"Текст поля 'Фамилия И. О.': {surname_and_initials}")
+
+        self.inputNameIBM.setText("")
+        self.inputFullName.setText("")
+        self.inputAddress.setText("")
+        self.inputPasportInfo.setText("")
+        self.inputIssuedByWhom.setText("")
+        self.inputSurnameInitials.setText("")
+
+        Rich.print_spacer()
+        Rich.debug_log("Поля очищены")
+
+        self.save_consent_to_processing_personal_data_to_csv( IBM_name, full_name,
+            address, serial_and_number_passport, issue_by, surname_and_initials)
+
+        self.consent_processing_personal_data = (
+            self.read_csv_data_for_consent_processing_personal_data())
+
 
     def get_input_data_for_report(self) -> None:
         """
-        Функция для получения данных, введённых пользователем в соответствующие поля.
+        Функция для получения данных, введённых пользователем в соответствующие поля
+        вкладки заполнения шаблона реферата
 
         :return: None
         """
@@ -78,105 +147,11 @@ class MainWindow(QMainWindow):
         Rich.print_spacer()
         Rich.debug_log("Поля очищены")
 
-        self.save_data_to_csv(authors, copyright_holders, app_name,
+        self.save_report_data_to_csv(authors, copyright_holders, app_name,
                     annotation, IBM_type, program_language,
                     operation_system, scope_program)
 
-        self.read_csv_data()
-
-        self.fill_report_data(authors, copyright_holders, app_name,
-                    annotation, IBM_type, program_language,
-                    operation_system, scope_program)
-
-
-    @staticmethod
-    def fill_report_data(authors, copyright_holders, app_name,
-                    annotation, IBM_type, program_language,
-                    operation_system, scope_program):
-        """
-        Функция для заполнения документа Реферат.docx данными, которые ввёл пользователь
-
-        :return: None
-        """
-
-        path_template_report = Path("resources/documents/report.docx").as_posix()
-        doc = DocxTemplate(path_template_report)
-
-        context = {
-            'authors': authors,
-            'copyright_holder': copyright_holders,
-            'program_name': app_name,
-            'annotation': annotation,
-            'computer_type': IBM_type,
-            'language': program_language,
-            'os': operation_system,
-            'program_size': scope_program
-        }
-
-        doc.render(context)
-        path_save_doc = Path("output/output-report.docx").as_posix()
-        doc.save(path_save_doc)
-
-        Rich.success_log("Документ успешно создан!")
-
-
-    @staticmethod
-    def save_data_to_csv(authors, copyright_holders, app_name,
-                    annotation, IBM_type, program_language,
-                    operation_system, scope_program) -> None:
-        """
-        Функция для сохранения введённых данных в csv файл
-
-        :return: None
-        """
-
-        csv_data = [authors, copyright_holders, app_name,
-                    annotation, IBM_type, program_language,
-                    operation_system, scope_program]
-
-        with open('resources/csv/report-data.csv',
-                  mode='w',
-                  newline='',
-                  encoding='utf-8'
-                  ) as csv_file:
-            writer = csv.writer(csv_file)
-
-            writer.writerow(csv_data)
-
-            Rich.success_log("Данные, введённые пользователем, сохранены в csv файл")
-
-
-    @staticmethod
-    def read_csv_data() -> None:
-        """
-        Функция для получения данных из csv
-
-        :return: list - массив данных (ранее были введены пользователем
-         для заполнения шаблона реферата)
-        """
-
-        with (open('resources/csv/report-data.csv',
-                   mode='r',
-                   newline='',
-                   encoding='utf-8')
-              as csv_file):
-            csv_reader = csv.reader(csv_file)
-
-            for row in csv_reader:
-                Rich.print_tabel(
-                    "Данные из csv (реферат)",
-                    ["Параметр", "Значение"],
-                    [
-                        ["Авторы", row[0]],
-                        ["Правообладатель", row[1]],
-                        ["Название программы", row[2]],
-                        ["Аннотация", row[3]],
-                        ["Тип ЭВМ", row[4]],
-                        ["Язык программирования", row[5]],
-                        ["Поддерживаемые операционные системы", row[6]],
-                        ["Объём программы", row[7]],
-                    ]
-                )
+        self.report_data = self.read_csv_data_report()
 
 
     def mousePressEvent(self, event) -> None:
@@ -209,3 +184,163 @@ class MainWindow(QMainWindow):
             self.move(self.pos() + delta)
             self.drag_position = event.globalPosition().toPoint()
             event.accept()
+
+
+    @staticmethod
+    def fill_report_data(authors, copyright_holders, app_name,
+                         annotation, IBM_type, program_language,
+                         operation_system, scope_program):
+        """
+        Функция для заполнения документа Реферат.docx данными, которые ввёл пользователь
+
+        :return: None
+        """
+
+        path_template_report = Path("resources/documents/report.docx").as_posix()
+        doc = DocxTemplate(path_template_report)
+
+        context = {
+            'authors': authors,
+            'copyright_holder': copyright_holders,
+            'program_name': app_name,
+            'annotation': annotation,
+            'computer_type': IBM_type,
+            'language': program_language,
+            'os': operation_system,
+            'program_size': scope_program
+        }
+
+        doc.render(context)
+        path_save_doc = Path("output/output-report.docx").as_posix()
+        doc.save(path_save_doc)
+
+        Rich.success_log("Документ успешно создан!")
+
+
+    @staticmethod
+    def save_report_data_to_csv(authors, copyright_holders, app_name,
+                         annotation, IBM_type, program_language,
+                         operation_system, scope_program) -> None:
+        """
+        Функция для сохранения введённых данных реферата в csv файл
+
+        :return: None
+        """
+
+        csv_data = [authors, copyright_holders, app_name,
+                    annotation, IBM_type, program_language,
+                    operation_system, scope_program]
+
+        with open('resources/csv/report-data.csv',
+                  mode='w',
+                  newline='',
+                  encoding='utf-8'
+                  ) as csv_file:
+            writer = csv.writer(csv_file)
+
+            writer.writerow(csv_data)
+
+            Rich.success_log("Данные, введённые пользователем, сохранены в csv файл")
+
+
+    @staticmethod
+    def save_consent_to_processing_personal_data_to_csv(
+            IBM_name, full_name, address, serial_and_number_passport,
+            issue_by, surname_and_initials) -> None:
+        """
+        Функция для сохранения данных, введённых пользователем для заполнения шаблона
+        о согласии на обработку персональных данных, в csv
+
+        :return: None
+        """
+
+        csv_data = [IBM_name, full_name, address,
+                    serial_and_number_passport, issue_by, surname_and_initials]
+
+        with open('resources/csv/consent-to-processing-personal-data.csv',
+                  mode='w',
+                  newline='',
+                  encoding='utf-8'
+                  ) as csv_file:
+            writer = csv.writer(csv_file)
+
+            writer.writerow(csv_data)
+
+            Rich.success_log("Данные, введённые пользователем, сохранены в csv файл")
+
+
+
+    @staticmethod
+    def read_csv_data_report() -> list:
+        """
+        Функция для получения данных из csv
+
+        :return: list - массив данных (ранее были введены пользователем
+         для заполнения шаблона реферата)
+        """
+
+        with (open('resources/csv/report-data.csv',
+                   mode='r',
+                   newline='',
+                   encoding='utf-8')
+              as csv_file):
+            csv_reader = csv.reader(csv_file)
+
+            data_massive = []
+
+            for row in csv_reader:
+                Rich.print_tabel(
+                    "Данные из csv (реферат)",
+                    ["Параметр", "Значение"],
+                    [
+                        ["Авторы", row[0]],
+                        ["Правообладатель", row[1]],
+                        ["Название программы", row[2]],
+                        ["Аннотация", row[3]],
+                        ["Тип ЭВМ", row[4]],
+                        ["Язык программирования", row[5]],
+                        ["Поддерживаемые операционные системы", row[6]],
+                        ["Объём программы", row[7]],
+                    ]
+                )
+
+                data_massive.append(row)
+
+        return data_massive
+
+
+    @staticmethod
+    def read_csv_data_for_consent_processing_personal_data() -> list:
+        """
+        Функция для чтения csv и возвращения прочитанных данных, введённых
+        пользователем для заполнения шаблона согласия на обработку персональных данных
+
+        :return: list - возвращает массив с прочитанными данными
+        """
+
+        with (open('resources/csv/consent-to-processing-personal-data.csv',
+                   mode='r',
+                   newline='',
+                   encoding='utf-8')
+              as csv_file):
+            csv_reader = csv.reader(csv_file)
+
+            data_massive = []
+
+            for row in csv_reader:
+                Rich.print_tabel(
+                    "Данные из csv (согласие на обработку персональных данных)",
+                    ["Параметр", "Значение"],
+                    [
+                        ["Название программы ЭВМ", row[0]],
+                        ["ФИО", row[1]],
+                        ["Адрес прописки", row[2]],
+                        ["Серия номер паспорта", row[3]],
+                        ["Кем выдан паспорт", row[4]],
+                        ["Фамилия И. О.", row[5]],
+                    ]
+                )
+
+                data_massive.append(row)
+
+        return data_massive
