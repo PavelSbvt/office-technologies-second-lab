@@ -61,6 +61,320 @@
      <attribute name="title">
       <string>Tab 1</string>
      </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>781</width>
+        <height>511</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayoutFirstTab">
+       <item>
+        <widget class="QLabel" name="labelTitleFillReport">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	color: white;
+	font-weight: bold;
+	font-size: 19px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Заполнение реферата</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>3</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QFrame {
+	background-color: white;
+}</string>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="authorsLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Авторы</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputAuthors"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelCopyratinHolders">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Правообладатели</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputCopyratingHolders"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelAppName">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Название приложения</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputAppName"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelAnnotation">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Аннотация</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputAnnotation"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelTypeIBM">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Тип ЭВМ</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputTypeIBM"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelProgramLanguage">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Язык программирования</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputProgramLanguage"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelOS">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Операционная система</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputOS"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Объём программы в мегабайтах</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputScopeProgram"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonBuildDocument">
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	background-color: rgb(111, 200, 97);
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+} 
+QPushButton:hover {
+	background-color: rgb(106, 188, 91);
+}
+QPushButton:pressed {
+	background-color: rgb(93, 165, 80);
+}</string>
+         </property>
+         <property name="text">
+          <string>Вставить данные в документ</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <property name="styleSheet">
