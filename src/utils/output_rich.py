@@ -29,6 +29,34 @@ class RichLog:
 
 
     @staticmethod
+    def enter_log(message: str) -> None:
+        """
+        Лог, информирующий о запуске какого-нибудь окна интерфейса.
+        Например, если запустится загрузочное окно, то выведется лог о "входе" в это окно.
+
+        :param message: Принимает текст сообщения о входе (показе) в какое-то окно.
+
+        :return: None
+        """
+
+        console.log(f"[magenta][ENTER] ▶ ВХОД: {message}[/magenta]", _stack_offset=2)
+
+
+    @staticmethod
+    def exit_log(message: str) -> None:
+        """
+        Лог, информирующий о закрытии какого-нибудь окна интерфейса.
+        Например, если закрыть основное окно приложения, то выведется лог о "выходе" из
+        этого окна.
+
+        :param message: Принимает текст сообщения о выходе (закрытии) в какого-то окна.
+
+        :return: None
+        """
+        console.log(f"[magenta][EXIT] ◀ ВЫХОД: {message}[/magenta]", _stack_offset=2)
+
+
+    @staticmethod
     def success_log(message: str) -> None:
         """
         Лог об успешном выполнении (используется при сообщении об успешном выполнении
