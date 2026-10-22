@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>798</width>
-    <height>593</height>
+    <width>796</width>
+    <height>701</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,14 +42,14 @@
       <x>0</x>
       <y>49</y>
       <width>801</width>
-      <height>551</height>
+      <height>671</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_1">
      <property name="styleSheet">
@@ -67,7 +67,7 @@
         <x>9</x>
         <y>9</y>
         <width>781</width>
-        <height>511</height>
+        <height>631</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayoutFirstTab">
@@ -373,6 +373,19 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer_16">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -392,7 +405,7 @@ QPushButton:pressed {
         <x>9</x>
         <y>10</y>
         <width>771</width>
-        <height>511</height>
+        <height>621</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayoutForSecondTab">
@@ -656,19 +669,381 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer_17">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <property name="styleSheet">
       <string notr="true">#tab_3 {
-	background-color: violet;
+	background-color: blue;
 	border-radius: 10px;
 }</string>
      </property>
      <attribute name="title">
       <string>Page</string>
      </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>10</y>
+        <width>771</width>
+        <height>611</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="labelTitleThirdTab">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Согласие на указание сведений об авторе</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_3">
+         <property name="styleSheet">
+          <string notr="true">QFrame {
+	background-color: white;
+}</string>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelNameIBMProgram">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Название программы ЭВМ</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputNameIBMProgram"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_18">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelPhysicalPersonData">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Физ. лицо - указать фамилию, имя, отчество, место жительства</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputPhysicalPersonData"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_19">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelJuridicalPerson">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Юр. лицо - наименование, место нахождения, ОГРН и ИНН</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputJuridicalPersonData"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_20">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelAuthorsName">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Фамилия Имя Отчество автора&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputAuthorsName"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_21">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelBordData">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Число, месяц, год рождения (через запятую)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputBornData"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_22">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelCitizenship">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Гражданство</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputCitizenship"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_23">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelPlaceOfLife">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Место постоянного жительства</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputPlaceOfLife"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_24">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelSrcPercent">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Процент написания исходного кода программы</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputSrcPercent"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_25">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelCopyrightHolderName">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>ФИО правообладателя</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputCopyrightHolderName"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_26">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelRole">
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Должность</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputRole"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonBuildConsentInfoAboutAuthor">
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	background-color: rgb(111, 200, 97);
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+} 
+QPushButton:hover {
+	background-color: rgb(106, 188, 91);
+}
+QPushButton:pressed {
+	background-color: rgb(93, 165, 80);
+}</string>
+         </property>
+         <property name="text">
+          <string>Вставить данные в документ</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </widget>
   </widget>
