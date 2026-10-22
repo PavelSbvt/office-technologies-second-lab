@@ -22,10 +22,4 @@ if __name__ == "__main__":
     MyMainWindow = MainWindow()
     MyMainWindow.show()
 
-    EntryReportData = UserEntryReportData()
-
-    EntryReportData.entry_report_data()
-    EntryReportData.save_data_to_csv()
-    EntryReportData.read_csv_data()
-
     sys.exit(App.exec())
