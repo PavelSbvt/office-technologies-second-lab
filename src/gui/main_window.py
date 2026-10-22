@@ -66,12 +66,13 @@ class MainWindow(QMainWindow):
         full_name = self.inputFullName.text().strip()
         address = self.inputAddress.text().strip()
         serial_and_number_passport = self.inputPasportInfo.text().strip()
+        data_issue = self.inputDataIssue.text().strip()
         issue_by = self.inputIssuedByWhom.text().strip()
         surname_and_initials = self.inputSurnameInitials.text().strip()
 
         if (not IBM_name or not full_name or not address or
-                not serial_and_number_passport or not issue_by or
-                not surname_and_initials):
+                not serial_and_number_passport or not data_issue
+                or not issue_by or not surname_and_initials):
             Rich.warning_log("Проверьте поля - есть незаполненные поля")
             return
 
@@ -81,6 +82,7 @@ class MainWindow(QMainWindow):
         Rich.debug_log(f"Текст поля 'Фамилия Имя Отчество': {full_name}")
         Rich.debug_log(f"Текст поля 'Адрес прописки': {address}")
         Rich.debug_log(f"Текст поля 'Серия номер паспорта': {serial_and_number_passport}")
+        Rich.debug_log(f"Текст поля 'Дата выдачи паспорта': {data_issue}")
         Rich.debug_log(f"Текст поля 'Кем выдан': {issue_by}")
         Rich.debug_log(f"Текст поля 'Фамилия И. О.': {surname_and_initials}")
 
@@ -88,6 +90,7 @@ class MainWindow(QMainWindow):
         self.inputFullName.setText("")
         self.inputAddress.setText("")
         self.inputPasportInfo.setText("")
+        self.inputDataIssue.setText("")
         self.inputIssuedByWhom.setText("")
         self.inputSurnameInitials.setText("")
 
@@ -95,7 +98,7 @@ class MainWindow(QMainWindow):
         Rich.debug_log("Поля очищены")
 
         self.save_consent_to_processing_personal_data_to_csv( IBM_name, full_name,
-            address, serial_and_number_passport, issue_by, surname_and_initials)
+            address, serial_and_number_passport, data_issue, issue_by, surname_and_initials)
 
         self.consent_processing_personal_data = (
             self.read_csv_data_for_consent_processing_personal_data())
@@ -245,7 +248,7 @@ class MainWindow(QMainWindow):
 
     @staticmethod
     def save_consent_to_processing_personal_data_to_csv(
-            IBM_name, full_name, address, serial_and_number_passport,
+            IBM_name, full_name, address, serial_and_number_passport, data_issue,
             issue_by, surname_and_initials) -> None:
         """
         Функция для сохранения данных, введённых пользователем для заполнения шаблона
@@ -254,8 +257,8 @@ class MainWindow(QMainWindow):
         :return: None
         """
 
-        csv_data = [IBM_name, full_name, address,
-                    serial_and_number_passport, issue_by, surname_and_initials]
+        csv_data = [IBM_name, full_name, address, serial_and_number_passport,
+                    data_issue, issue_by, surname_and_initials]
 
         with open('resources/csv/consent-to-processing-personal-data.csv',
                   mode='w',
@@ -336,8 +339,9 @@ class MainWindow(QMainWindow):
                         ["ФИО", row[1]],
                         ["Адрес прописки", row[2]],
                         ["Серия номер паспорта", row[3]],
-                        ["Кем выдан паспорт", row[4]],
-                        ["Фамилия И. О.", row[5]],
+                        ["Дата выдачи паспорта", row[4]],
+                        ["Кем выдан паспорт", row[5]],
+                        ["Фамилия И. О.", row[6]],
                     ]
                 )
 
