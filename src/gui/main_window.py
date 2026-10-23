@@ -7,17 +7,21 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMainWindow
 from PyQt6.uic import loadUi
 
+from core.user_data_entry import Validation
 from utils.output_rich import Rich
 
 
 class MainWindow(QMainWindow):
+    """
+    Класс главного окна приложения
+    """
 
     def __init__(self):
         super().__init__()
 
-        self.report_data = []
-        self.consent_processing_personal_data = []
-        self.consent_info_about_author = []
+        self.report_data: list = []
+        self.consent_processing_personal_data: list = []
+        self.consent_info_about_author: list = []
 
         ui_path = Path('src/gui/ui/main_window.ui').as_posix()
         loadUi(ui_path, self)
@@ -40,6 +44,10 @@ class MainWindow(QMainWindow):
 
         self.get_input_data_for_consent_info_about_author()
 
+        if not self.consent_info_about_author:
+            Rich.warning_log("Нет данных для заполнения согласия об авторе")
+            return
+
         self.fill_consent_info_about_author(
             self.consent_info_about_author[0])
 
@@ -56,6 +64,10 @@ class MainWindow(QMainWindow):
 
         self.get_input_data_for_consent_processing_personal_data()
 
+        if not self.consent_processing_personal_data:
+            Rich.warning_log("Нет данных для заполнения согласия")
+            return
+
         self.fill_consent_to_processing_personal_data(
             self.consent_processing_personal_data[0])
 
@@ -71,9 +83,11 @@ class MainWindow(QMainWindow):
 
         self.get_input_data_for_report()
 
-        report_data = self.report_data[0]
+        if not self.report_data:
+            Rich.warning_log("Нет данных для заполнения реферата")
+            return
 
-        self.fill_report_data(report_data)
+        self.fill_report_data(self.report_data[0])
 
 
     def get_input_data_for_consent_info_about_author(self) -> None:
@@ -95,11 +109,32 @@ class MainWindow(QMainWindow):
         copyright_holder_name = self.inputCopyrightHolderName.text().strip()
         role = self.inputRole.text().strip()
 
-        if (not IBM_name or (not physical_person_data and not juridical_person_data)
-                or not authors_name or not born_data or not citizenship
-                or not place_of_life or not src_percent
-                or not copyright_holder_name or not role):
-            Rich.warning_log("Проверьте поля - есть незаполненные поля")
+        errors = []
+
+        if not Validation.is_not_empty(IBM_name):
+            errors.append("Название программы ЭВМ — обязательное поле")
+        if not Validation.is_not_empty(physical_person_data) and \
+                not Validation.is_not_empty(juridical_person_data):
+            errors.append("Заполните хотя бы одно: физ. лицо или юр. лицо")
+        if not Validation.is_valid_full_name(authors_name):
+            errors.append("ФИО автора — минимум два слова, только буквы")
+        if not Validation.is_valid_birth_date(born_data):
+            errors.append("Дата рождения — 'ДД.ММ.ГГГГ', год 1900–2026")
+        if not Validation.is_valid_citizenship(citizenship):
+            errors.append("Гражданство — только буквы")
+        if not Validation.is_not_empty(place_of_life):
+            errors.append("Место жительства — обязательное поле")
+        if not Validation.is_valid_percent(src_percent):
+            errors.append("Процент исходного кода — целое число 0–100")
+        if not Validation.is_not_empty(copyright_holder_name):
+            errors.append("И. О. Фамилия правообладателя")
+        if not Validation.is_not_empty(role):
+            errors.append("Должность — обязательное поле")
+
+        if errors:
+            Rich.warning_log("Проверьте поля:")
+            for err in errors:
+                Rich.warning_log(f"  • {err}")
             return
 
         Rich.print_spacer()
@@ -154,10 +189,27 @@ class MainWindow(QMainWindow):
         issue_by = self.inputIssuedByWhom.text().strip()
         surname_and_initials = self.inputSurnameInitials.text().strip()
 
-        if (not IBM_name or not full_name or not address or
-                not serial_and_number_passport or not data_issue
-                or not issue_by or not surname_and_initials):
-            Rich.warning_log("Проверьте поля - есть незаполненные поля")
+        errors = []
+
+        if not Validation.is_not_empty(IBM_name):
+            errors.append("Название программы ЭВМ — обязательное поле")
+        if not Validation.is_valid_full_name(full_name):
+            errors.append("ФИО — минимум два слова, только буквы")
+        if not Validation.is_not_empty(address):
+            errors.append("Адрес прописки — обязательное поле")
+        if not Validation.is_valid_passport(serial_and_number_passport):
+            errors.append("Серия/номер паспорта — формат '1234 567890'")
+        if not Validation.is_valid_date(data_issue):
+            errors.append("Дата выдачи — формат 'ДД.ММ.ГГГГ'")
+        if not Validation.is_not_empty(issue_by):
+            errors.append("Кем выдан — обязательное поле")
+        if not Validation.is_valid_initials(surname_and_initials):
+            errors.append("Фамилия И. О. — формат 'Иванов И. О.'")
+
+        if errors:
+            Rich.warning_log("Проверьте поля:")
+            for err in errors:
+                Rich.warning_log(f"  • {err}")
             return
 
         Rich.print_spacer()
@@ -205,10 +257,29 @@ class MainWindow(QMainWindow):
         operation_system = self.inputOS.text().strip()
         scope_program = self.inputScopeProgram.text().strip()
 
-        if (not authors or not copyright_holders or not app_name
-                or not annotation or not IBM_type or not program_language
-                or not operation_system or not scope_program):
-            Rich.warning_log("Проверьте поля - есть незаполненные поля")
+        errors = []
+
+        if not Validation.is_valid_initials_list(authors):
+            errors.append("Авторы — 'Иванов И. О.' через запятую")
+        if not Validation.is_valid_copyright_holder(copyright_holders):
+            errors.append("Правообладатели — ФИО или название организации")
+        if not Validation.is_not_empty(app_name):
+            errors.append("Название приложения — обязательное поле")
+        if not Validation.is_not_empty(annotation):
+            errors.append("Аннотация — обязательное поле")
+        if not Validation.is_valid_os(IBM_type):
+            errors.append("Тип ЭВМ — буквы, цифры, пробелы, дефис")
+        if not Validation.is_valid_program_language(program_language):
+            errors.append("Язык программирования")
+        if not Validation.is_valid_os(operation_system):
+            errors.append("Операционная система — например, 'Windows, Linux'")
+        if not Validation.is_valid_positive_number(scope_program):
+            errors.append("Объём программы — положительное число (например, '964')")
+
+        if errors:
+            Rich.warning_log("Проверьте поля:")
+            for err in errors:
+                Rich.warning_log(f"  • {err}")
             return
 
         Rich.print_spacer()
@@ -396,12 +467,19 @@ class MainWindow(QMainWindow):
         copyright_holder_name = data_mas[8]
         role = data_mas[9]
 
+        born_parts = born_data.split('.')
+        born_day = born_parts[0] if len(born_parts) > 0 else ''
+        born_month = born_parts[1] if len(born_parts) > 1 else ''
+        born_year = born_parts[2] if len(born_parts) > 2 else ''
+
         context = {
             'ibm_name': IBM_name,
             'physical_person_data': physical_person_data,
             'juridical_person_data': juridical_person_data,
             'authors_name': authors_name,
-            'born_data': born_data,
+            'born_day': born_day,
+            'born_month': born_month,
+            'born_year': born_year,
             'citizenship': citizenship,
             'place_of_life': place_of_life,
             'src_percent': src_percent,
